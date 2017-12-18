@@ -1,0 +1,42 @@
+server:
+      port: 8080
+      tomcat:
+        max-threads: 800                # tomcat����߳�����Ĭ��Ϊ200
+        uri-encoding: UTF-8             # tomcat��URI����
+        basedir: /springboot-tomcat-tmp # ���Tomcat����־��Dump���ļ�����ʱ�ļ��У�Ĭ��Ϊϵͳ��tmp�ļ��У��磺C:\Users\Shanhy\AppData\Local\Temp��
+        accesslog:
+          enabled: true                 # ��Tomcat��Access��־��������������־��ʽ�ķ�����
+                                        #server.tomcat.access-log-pattern=
+                                        # accesslogĿ¼��Ĭ����basedir/logs
+logging:
+  config: classpath:logback.xml
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  dubbo:
+    application:
+      name : web
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    protocol:
+      name: dubbo
+      port: 20880
+      serialization: hessian2
+    scan: com.example
+    consumer:
+      timeout: 50000
+    provider:
+      timeout: 50000
+  rabbitmq:
+      host: 127.0.0.1
+      username: root
+      password: root
+      virtual-host: /
+      publisher-confirms: true
+      ###用于定义rabbitmq的对了和exchange的名称
+      queue: queue_one
+      exchange: my-mq-exchange
+      routingkey: msg.cl.*

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.LoanApplyMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.example.demo.api.entity.LoanApply">
+		<id column="id" property="id" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="auto_user_id" property="autoUserId" />
+		<result column="car_id" property="carId" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_update" property="gmtUpdate" />
+		<result column="apply_status" property="applyStatus" />
+		<result column="apply_task_key" property="applyTaskKey" />
+		<result column="gmt_apply_end" property="gmtApplyEnd" />
+		<result column="memo" property="memo" />
+		<result column="gmt_repayment_end" property="gmtRepaymentEnd" />
+		<result column="gmt_lended" property="gmtLended" />
+		<result column="loan_order_no" property="loanOrderNo" />
+		<result column="account_id" property="accountId" />
+		<result column="child_id" property="childId" />
+		<result column="is_delete" property="isDelete" />
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+        id, merchant_id, auto_user_id , car_id , gmt_create , 
+        gmt_update , apply_status , apply_task_key , gmt_apply_end , memo, 
+        gmt_repayment_end , gmt_lended , loan_order_no,gmt_management_lended,gmt_platform_returns,is_delete
+    </sql>
+
+	<select id="selectApplyList" resultMap="BaseResultMap">
+		SELECT * FROM
+		 loan_apply
+		 WHERE is_delete =1 and apply_status ='apply_success'
+	</select>
+
+</mapper>

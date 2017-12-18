@@ -1,0 +1,76 @@
+server:
+      port: 9080
+      tomcat:
+        max-threads: 800                # tomcat����߳�����Ĭ��Ϊ200
+        uri-encoding: UTF-8             # tomcat��URI����
+        basedir: /springboot-tomcat-tmp # ���Tomcat����־��Dump���ļ�����ʱ�ļ��У�Ĭ��Ϊϵͳ��tmp�ļ��У��磺C:\Users\Shanhy\AppData\Local\Temp��
+        accesslog:
+          enabled: true                 # ��Tomcat��Access��־��������������־��ʽ�ķ�����
+                                        #server.tomcat.access-log-pattern=
+                                        # accesslogĿ¼��Ĭ����basedir/logs
+logging:
+  config: classpath:logback.xml
+spring:
+  dubbo:
+    application:
+      name : service
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    protocol:
+      name: dubbo
+      port: 20887
+      serialization: hessian2
+    scan: com.example
+    consumer:
+      timeout: 50000
+    provider:
+      timeout: 50000
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.171:3306/cld?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    druid:
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  rabbitmq:
+      host: 127.0.0.1
+      username: root
+      password: root
+      virtual-host: /
+      publisher-confirms: true
+      ###用于定义rabbitmq的对了和exchange的名称
+      queue: queue_one
+      exchange: my-mq-exchange
+      routingkey: msg.cl.*
+
+mybatis:
+  typeAliasesPackage: com.example.demo.api.entity
+  mapperLocations: classpath*:mapper/*.xml
+  configuration:
+   map-underscore-to-camel-case: true
+   use-generated-keys: true
+   default-fetch-size: 100
+   default-statement-timeout: 30
